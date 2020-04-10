@@ -69,7 +69,7 @@ def monty_hall_simu2(strat, nb_emissions):
 
 def main():
     strat=Strategie()  # on crée une instance de la classe Strategie
-    nb_emission=100000
+    nb_emission=10000
     # strategie je ne change pas (je garde la porte de mon premier choix)
     premier_choix=monty_hall_simu1(strat.garder, nb_emission)
     # Strategie je change
