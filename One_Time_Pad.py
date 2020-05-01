@@ -46,15 +46,23 @@ def sauve_dico():
      49: 'x', 16: 'Q', 33: 'h', 50: 'y',
      'complement': '\\'}
     fichier="dico_b64.txt"
+    fichier2="dico_b64_inv.txt"
     chemin_b64=r"H:\Doc_jspit\GitHub\TP_S2"     
     os.chdir(chemin_b64)
+    d_inv={}
+    for i in d:
+        d_inv[d[i]]=i
+
     with open(fichier,'wb') as f:
         pickle.dump(d,f)
+    with open(fichier2,'wb') as f:
+        pickle.dump(d_inv,f)
     
     # verif recup
-    with open(fichier,'rb') as f:
+    with open(fichier2,'rb') as f:
         test=pickle.load(f)
     print("test vaut ", test)
+    return d,d_inv
     
 
 
@@ -82,7 +90,10 @@ def recup_def_b64():
     for i in recup_2:
         if i.isdigit():
             d[int(i)]=recup_2[recup_2.index(i)+1]
-    return d  # attention, il manque le complément (=)
+    d_inv={} # création du dico inversé
+    for i in d:
+        d_inv[d[i]]=i
+    return d, d_inv # attention, il manque le complément (=)
     
 
         
@@ -93,8 +104,7 @@ def recup_def_b64():
     # pour analyse du code on doit supprimer la ligne 1
 
 
-recup_def_b64()
-chaine="abcdefgh"
+
 
 def otp_chiffre(chaine):
     """
@@ -119,3 +129,6 @@ def creation_caracteres(N):
 #print("\n",creation_caracteres(100))
 print(d)
 sauve_dico()
+
+recup_def_b64()
+chaine="abcdefgh"
