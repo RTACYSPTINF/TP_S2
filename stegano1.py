@@ -48,9 +48,8 @@ def ecrire_taille_texte(im,texte):
 
     ######### écriture de la longeur de la chaine dans les 8 premiers quartets R
     # longueur de la chaine dans la variable long
-    #long=len(texte)
-    # pour test long=45697
-    long=3561
+    long=len(texte)
+    #long=3561
     n_bits_long_chaine=len(bin(long))-2
     # n_R représente le nombre de R utiles pour écrire la taille du texte
     # exemple si n_bits_long_chaine vaut 15, il faut 3 4 4 4 donc 
@@ -71,7 +70,7 @@ def ecrire_taille_texte(im,texte):
 
     
 
-def recup_taille_image(image):
+def recup_taille_texte(image):
     N=8
     masque=0b00001111
     taille=0 # nombre qui donne la taille du texte
@@ -79,11 +78,10 @@ def recup_taille_image(image):
     for i in range(N):
         r,g,b=image.getpixel((i,0))
         rec.append(operator.and_(r,0b00001111))
-    print(rec)
     nb_final=0
     for i,v in enumerate(rec):
         nb_final+=operator.lshift(v,4*(N-1-i))
-    print(nb_final)
+    return nb_final  # recupération de la valeur finale (taille du texte)
         
     
 def ecrire_texte(image, texte):
@@ -109,15 +107,15 @@ def ecrire_texte(image, texte):
     cpt=0
     for y in range(1,512):
         for x in range(0,512):
-            #print(x,y)
-            if cpt==taille_liste_lettres-1:
+            if cpt==taille_liste_lettres*2-1:
                 break
             r,g,b=image.getpixel((x,y))
             r=operator.and_(r, 0b11110000)
             
             image.putpixel((x,y), (r, g, b))
             cpt+=1
-#######################   ecriture dans les quatets de poids faibles de R des lettres du texte
+
+#######################   ecriture dans les quartets de poids faibles de R des lettres du texte
     cpt=0
     for y in range(1,512):
         for x in range(0,512):
@@ -126,15 +124,42 @@ def ecrire_texte(image, texte):
                 break
             r,g,b=image.getpixel((x,y))
             r=operator.or_(liste_lettres[cpt], r)
-            print(liste_lettres[cpt])
-            
             image.putpixel((x,y), (r, g, b))
             cpt+=1
-
-            #
-    print(cpt)
     return image
             
+def dechiffre_image(image):
+    """
+    Permet de récupérer le texte caché dans l'image
+    Le texte est caché à partir de la ligne 2
+    Il faut tout d'abord récupérer la taille du texte caché
+            recup_taille_image(image)
+    """
+    taille=recup_taille_texte(image) #récupère la taille du texte sous forme d'entier décimal
+    liste_recup=[]
+    print("taille = :" ,taille)
+    cpt=0
+    for y in range(1,512):
+        for x in range(0,512):
+            #print(x,y)
+            if cpt==taille*2:
+                break
+            r,g,b=image.getpixel((x,y))
+            liste_recup.append(operator.and_(0b00001111, r))
+            cpt+=1
+    print(liste_recup)
+    
+    Lf=[]
+    for i in range(0,len(liste_recup),2):
+        print(i)
+        temp=operator.lshift(liste_recup[i],4)+liste_recup[i+1]
+        Lf.append(temp)
+    print(Lf)
+    Chaine=[]
+    for i in Lf:
+        Chaine.append(chr(i))
+    return "".join(Chaine)
+
 
 
 
@@ -157,17 +182,12 @@ def ecrire_texte(image, texte):
 
 def main():
     im1=lire_image(chemin,fichier)
-    im=ecrire_taille_texte(im1, texte)
-    for i in range(8):
-        r,g,b=im.getpixel((0,i))
-        print("\n",r)
-    recup_taille_image(im)
-    im2=ecrire_texte(im1,texte)
-    for i in range(10):
-        r,g,b=im2.getpixel((i,1))
-        print("\nla valeur vaut : ",r)
-    im2.show()
-    im1.show()
+    im2=ecrire_taille_texte(im1,texte)
+    print(recup_taille_texte(im2))
+    im3=ecrire_texte(im2,texte)
+    print(dechiffre_image(im3))
+    
+
 
 
 
