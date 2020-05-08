@@ -2,11 +2,15 @@ from PIL import Image
 import os
 import operator
 
-
+"""
+Les chemins et fichiers suivants sont 
+à adapter en fonction de chacun
+"""
 chemin=r'H:\Doc_jspit\Travail-2010-2011\cours-TD-TP_JP\cours\Algo-RT1-Python\python_avance_S2\steganographie\codage_image_steganographie'
 os.chdir(chemin)
 fichier='lena.png'
 texte="La prise du batiment se fera demain à 16h avec toutes les équipes!!!"
+
 
 
 im1=Image.open(fichier)
