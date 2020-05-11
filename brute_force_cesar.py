@@ -1,4 +1,4 @@
-# message à déchiffrer, on sa   it qu'il est chiffrer par la méthode de cesar
+# message à déchiffrer, on sait qu'il a été chiffré par la méthode de cesar
 # on fait une recherche brute force
 #○de 'A' à 'Z' on va de 65 à 90 inclus
 
