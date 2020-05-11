@@ -92,7 +92,7 @@ def change_caractere1(liste):
     - soit issu de MAJUS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     - soit issu de MINUS = 'abcdefghijklmnopqrstuvwxyz'
     - soit issu de DIGIT = '0123456789'
-    - soit issu de CARACTERE = '&#{}[]@()^%!?/$'
+    - soit issu de CARACTERE = '&#{}[]@()^%!?/$+*'
     on doit changer le premier caractère de la liste
     pour qu'il soit d'un type différent
     Exemple : Liste=['A', 'B', 'C', 'D']. On doit changer le 'A' par un caractères autre qu'une majuscule
@@ -172,7 +172,12 @@ def mdp_gene(N,dec):
 
 
 if __name__=="__main__":
-    print(mdp_gene(20,3))
+    a=mdp_gene(30,2)
+    print(mdp_gene(20,2))
+    print("".join(a))
+
+
+    
 
 
 
