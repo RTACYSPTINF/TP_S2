@@ -172,8 +172,8 @@ def mdp_gene(N,dec):
 
 
 if __name__=="__main__":
-    a=mdp_gene(30,2)
-    print(mdp_gene(20,2))
+    a=mdp_gene(30,3)
+    print(mdp_gene(20,5))
     print("".join(a))
 
 
