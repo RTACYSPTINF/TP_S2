@@ -2,6 +2,7 @@ from PIL import Image
 import os
 import operator
 
+
 """
 Les chemins et fichiers suivants sont 
 à adapter en fonction de chacun
@@ -20,6 +21,7 @@ im1=Image.open(fichier)
 def lire_image(chemin, image):
     os.chdir(chemin)
     im1=Image.open(image)
+    im1.show()
     return im1
 
 def filtre_gauche(N):
@@ -34,7 +36,7 @@ def filtre_gauche(N):
 def ecrire_taille_texte(im,texte):
     """
     image est une image du style image=Image.open('fichier.png')
-    im : est une image sur laquelle on va aplliquer les changement
+    im : est une image sur laquelle on va appliquer les changements
     im : résulte de Image.open('lena.png')
     texte : contient la chaine à cacher dans l'image
     """

@@ -176,6 +176,8 @@ if __name__=="__main__":
     print(mdp_gene(20,5))
     print("".join(a))
 
+   
+
 
     
 
